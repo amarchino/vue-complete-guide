@@ -17,6 +17,12 @@ const app = Vue.createApp({
     },
     resetInput() {
       this.name = '';
+    },
+    outputFullName(lastName) {
+      if(this.name === '') {
+        return '';
+      }
+      return this.name + ' ' + lastName;
     }
   }
 });
