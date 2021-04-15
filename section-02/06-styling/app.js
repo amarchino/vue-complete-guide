@@ -8,7 +8,8 @@ Vue.createApp({
   },
   methods: {
     boxSelected(box) {
-      this['box' + box + 'Selected'] = true;
+      const selection = `box${box}Selected`
+      this[selection] = !this[selection];
     }
   }
 }).mount('#styling');
