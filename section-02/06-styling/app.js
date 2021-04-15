@@ -14,7 +14,7 @@ Vue.createApp({
       return {active: this.boxBSelected};
     },
     boxCClasses() {
-      return {active: this.boxCSelected};
+      return ['demo', {active: this.boxCSelected}];
     }
   },
   methods: {
