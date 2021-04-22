@@ -3,7 +3,7 @@
     <header>
       <h1>{{ friend.name }}</h1>
     </header>
-    <button @click="toggleDetails">Show Details</button>
+    <button @click="toggleDetails">{{ detailsAraVisible ? 'Hide' : 'Show' }} Details</button>
     <ul v-if="detailsAraVisible">
       <li><strong>Phone:</strong> {{ friend.phone }}</li>
       <li><strong>Email:</strong> {{ friend.email }}</li>
