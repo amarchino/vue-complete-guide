@@ -13,13 +13,12 @@
         {{ emailAddress }}
       </li>
     </ul>
+    <button @click="$emit('delete', id)">Delete</button>
   </li>
 </template>
 
 <script>
-import NewFriend from './NewFriend.vue';
 export default {
-  components: { NewFriend },
   props: {
     'id': { type: String, required: true },
     'name': { type: String, required: true },
@@ -39,7 +38,14 @@ export default {
       }
       console.warn('Id is missing!');
       return false;
-    }
+    },
+    'delete': (id) => {
+      if(id) {
+        return true;
+      }
+      console.warn('Id is missing!');
+      return false;
+    },
   },
   methods: {
     toggleDetails() {

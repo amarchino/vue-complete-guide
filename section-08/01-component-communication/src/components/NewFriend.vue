@@ -33,7 +33,7 @@ export default {
       this.$emit('add-contact', this.enteredName, this.enteredPhone, this.enteredEmail);
       this.enteredName = this.enteredPhone = this.enteredEmail = '';
     }
-  },
+  }
 }
 </script>
 
