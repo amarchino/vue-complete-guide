@@ -17,7 +17,9 @@
 </template>
 
 <script>
+import NewFriend from './NewFriend.vue';
 export default {
+  components: { NewFriend },
   props: {
     'id': { type: String, required: true },
     'name': { type: String, required: true },
