@@ -30,6 +30,15 @@ export default {
       detailsAreVisible: false
     };
   },
+  emits: {
+    'toggle-favorite': (id) => {
+      if(id) {
+        return true;
+      }
+      console.warn('Id is missing!');
+      return false;
+    }
+  },
   methods: {
     toggleDetails() {
       this.detailsAreVisible = !this.detailsAreVisible;
