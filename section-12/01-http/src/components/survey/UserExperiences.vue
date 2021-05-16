@@ -6,6 +6,7 @@
         <base-button @click="loadExperiences">Load Submitted Experiences</base-button>
       </div>
       <p v-if="isLoading">Loading...</p>
+      <p v-else-if="!isLoading && (!results || results.length === 0)">No stored experiences found. Start adding some survey results first.</p>
       <ul v-else>
         <survey-result
           v-for="result in results"
@@ -44,12 +45,12 @@ export default {
           }
         })
         .then(data => {
-          this.isLoading = false;
           const results = [];
           for(const id in data) {
             results.push({ id, name: data[id].name, rating: data[id].rating });
           }
           this.results = results;
+          this.isLoading = false;
         });
     }
   }
