@@ -29,6 +29,9 @@ export default {
       results: []
     };
   },
+  mounted() {
+    this.loadExperiences();
+  },
   methods: {
     loadExperiences() {
       fetch('https://vue-http-demo-84341-default-rtdb.europe-west1.firebasedatabase.app/surveys.json')
