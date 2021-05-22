@@ -51,6 +51,11 @@ export default {
   },
   created() {
     this.loadTeamMembers(this.teamId);
+  },
+  beforeRouteUpdate(to, from, next) {
+    console.log('TeamMembers beforeRouteUpdate', to, from);
+    // this.loadTeamMembers(to.params.teamId);
+    next();
   }
 };
 </script>
