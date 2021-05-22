@@ -54,6 +54,10 @@ router.beforeEach((to, from, next) => {
   return next();
   // next({ name: 'team-members', params: { teamId: 't1' } });
 });
+router.afterEach((to,from) => {
+  // Send analytics data
+  console.log('Global afterEach', to, from);
+});
 
 const app = createApp(App);
 app.use(router);
