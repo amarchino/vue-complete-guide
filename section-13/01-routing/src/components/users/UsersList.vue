@@ -1,5 +1,6 @@
 <template>
   <button @click="confirmInput">Confirm</button>
+  <button @click="saveChanges">Save data</button>
   <ul>
     <user-item v-for="user in users" :key="user.id" :name="user.fullName" :role="user.role"></user-item>
   </ul>
@@ -13,15 +14,31 @@ export default {
     UserItem,
   },
   inject: ['users'],
+  data() {
+    return {
+      changesSaved: false
+    };
+  },
   methods: {
     confirmInput() {
       // do something
       this.$router.push('/teams');
+    },
+    saveChanges() {
+      this.changesSaved = true;
     }
   },
   beforeRouteEnter(to, from, next) {
     console.log('UsersList beforeRouteEnter', to, from);
     next();
+  },
+  beforeRouteLeave(to, from, next) {
+    console.log('UsersList beforeRouteLeave', to, from);
+    if(this.changesSaved){
+      return next();
+    }
+    const userWantsToLeave = confirm('Ar you sure? You got unsaved changes');
+    next(userWantsToLeave);
   }
 };
 </script>
