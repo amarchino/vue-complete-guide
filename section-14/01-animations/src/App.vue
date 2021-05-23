@@ -11,7 +11,9 @@
         @after-enter="afterEnter"
         @before-leave="beforeLeave"
         @leave="leave"
-        @after-leave="afterLeave">
+        @after-leave="afterLeave"
+        @enter-cancelled="enterCancelled"
+        @leave-cancelled="leaveCancelled">
       <p v-if="paraIsVisible">This is only sometimes visible...</p>
     </transition>
     <button @click="toggleParagraph">Toggle paragraph</button>
@@ -38,7 +40,9 @@ export default {
       animatedBlock: false,
       dialogIsVisible: false,
       paraIsVisible: false,
-      usersAreVisible: false
+      usersAreVisible: false,
+      enterInterval: null,
+      leaveInterval: null
     };
   },
   methods: {
@@ -62,21 +66,49 @@ export default {
     },
     beforeEnter(el) {
       console.log('beforeEnter', el);
+      el.style.opacity = 0;
     },
     beforeLeave(el) {
       console.log('beforeLeave', el);
+      el.style.opacity = 1;
     },
-    enter(el) {
+    enter(el, done) {
       console.log('enter', el);
+      let round = 1;
+      this.enterInterval = setInterval(() => {
+        el.style.opacity = round * 0.01;
+        round++;
+        if(round > 100) {
+          clearInterval(this.enterInterval);
+          done();
+        }
+      }, 20);
     },
-    leave(el) {
+    leave(el, done) {
       console.log('leave', el);
+      let round = 1;
+      this.leaveInterval = setInterval(() => {
+        el.style.opacity = 1 - round * 0.01;
+        round++;
+        if(round > 100) {
+          clearInterval(this.leaveInterval);
+          done();
+        }
+      }, 20);
     },
     afterEnter(el) {
       console.log('afterEnter', el);
     },
     afterLeave(el) {
       console.log('afterLeave', el);
+    },
+    enterCancelled(el) {
+      console.log('enterCancelled', el);
+      clearInterval(this.enterInterval);
+    },
+    leaveCancelled(el) {
+      console.log('leaveCancelled', el);
+      clearInterval(this.leaveInterval);
     }
   }
 };
@@ -125,12 +157,6 @@ button:active {
 }
 .animate {
   animation: slide-scale 0.3s ease-out forwards;
-}
-.para-enter-active {
-  animation: slide-scale 0.3s ease-out;
-}
-.para-leave-active {
-  animation: slide-scale 0.3s ease-in;
 }
 
 .fade-button-enter-from,
