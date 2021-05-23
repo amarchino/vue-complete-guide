@@ -4,7 +4,7 @@
     <button @click="animateBlock">Animate</button>
   </div>
   <div class="container">
-    <transition>
+    <transition name="para">
       <p v-if="paraIsVisible">This is only sometimes visible...</p>
     </transition>
     <button @click="toggleParagraph">Toggle paragraph</button>
@@ -89,10 +89,10 @@ button:active {
 .animate {
   animation: slide-scale 0.3s ease-out forwards;
 }
-.v-enter-active {
+.para-enter-active {
   animation: slide-scale 0.3s ease-out;
 }
-.v-leave-active {
+.para-leave-active {
   animation: slide-scale 0.3s ease-in;
 }
 @keyframes slide-scale {
