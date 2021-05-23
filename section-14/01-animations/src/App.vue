@@ -1,4 +1,9 @@
 <template>
+  <router-view v-slot="{ Component }">
+    <transition name="route" mode="out-in">
+      <component :is="Component"></component>
+    </transition>
+  </router-view>
   <div class="container">
     <users-list></users-list>
   </div>
@@ -178,6 +183,12 @@ button:active {
 }
 .fade-button-leave-active {
   transition: opacity 0.3s ease-in;
+}
+.route-enter-active {
+  animation: slide-scale 0.4s ease-out reverse;
+}
+.route-leave-active {
+  animation: slide-scale 0.4s ease-out;
 }
 
 @keyframes slide-scale {
