@@ -22,10 +22,11 @@ export default {
   },
   async loadCoaches(context) {
     const response = await fetch(`https://vue-http-demo-f008d-default-rtdb.firebaseio.com/coaches.json`);
-    if(!response.ok) {
-      // error
-    }
     const responseData = await response.json();
+    if(!response.ok) {
+      const error = new Error(responseData.message || 'Failed to fetch!');
+      throw error;
+    }
     const coaches = Object.entries(responseData)
       .map(([id, data]) => ({
         ...data,
