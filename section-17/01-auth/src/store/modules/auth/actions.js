@@ -12,8 +12,7 @@ export default {
     const responseData = await response.json();
 
     if (!response.ok) {
-      console.log(responseData);
-      throw new Error(responseData.message || 'Failed to authenticate.');
+      throw new Error(responseData.message || 'Failed to authenticate. Check your login data');
     }
 
     context.commit('setUser', {
