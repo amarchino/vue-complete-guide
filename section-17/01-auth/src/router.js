@@ -30,7 +30,7 @@ const router = createRouter({
   ]
 });
 
-router.beforeEach((to, from, next) => {
+router.beforeEach((to, _, next) => {
   if(to.meta.requiresAuth && !store.getters.isAuthenticated) {
     return next('/auth');
   }
