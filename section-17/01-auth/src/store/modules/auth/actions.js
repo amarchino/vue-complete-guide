@@ -1,3 +1,4 @@
+let timer;
 export default {
   login(context, payload) {
     return context.dispatch('auth', {
@@ -30,33 +31,50 @@ export default {
     if (!response.ok) {
       throw new Error(responseData.message || 'Failed to authenticate. Check your login data');
     }
+    const expiresIn = +responseData.expiresIn * 1000;
+    const expirationDate = new Date().getTime() + expiresIn;
 
     localStorage.setItem('token', responseData.idToken);
     localStorage.setItem('userId', responseData.localId);
+    localStorage.setItem('tokenExpiration', expirationDate);
+
+    timer = setTimeout(() => context.dispatch('autoLogout'), expiresIn);
 
     context.commit('setUser', {
       token: responseData.idToken,
-      userId: responseData.localId,
-      tokenExpiration: responseData.expiresIn
+      userId: responseData.localId
     });
   },
   tryLogin(context) {
     const token = localStorage.getItem('token');
     const userId = localStorage.getItem('userId');
+    const tokenExpiration = localStorage.getItem('tokenExpiration');
 
-    if(token && userId) {
+    const expiresIn = +tokenExpiration - new Date().getTime();
+
+    if(expiresIn > 1000 && token && userId) {
+      timer = setTimeout(() => context.dispatch('autoLogout'), expiresIn);
+
       context.commit('setUser', {
         token,
-        userId,
-        tokenExpiration: null
+        userId
       });
     }
   },
   logout(context) {
+    localStorage.removeItem('token');
+    localStorage.removeItem('userId');
+    localStorage.removeItem('tokenExpiration');
+
+    clearTimeout(timer);
+
     context.commit('setUser', {
       token: null,
-      userId: null,
-      tokenExpiration: null
+      userId: null
     });
+  },
+  autoLogout(context) {
+    context.dispatch('logout');
+    context.commit('setAutoLogout');
   }
 };

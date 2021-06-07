@@ -32,7 +32,7 @@ export default {
       password: '',
       formIsValid: true,
       mode: 'login',
-      isLoading: null,
+      isLoading: false,
       error: null
     }
   },
