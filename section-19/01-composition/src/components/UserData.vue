@@ -4,13 +4,16 @@
 </template>
 
 <script>
-import { computed } from '@vue/runtime-core';
+import { computed, inject } from '@vue/runtime-core';
 export default {
-  props: ['firstName', 'lastName', 'age'],
-  setup(props) {
+  props: ['firstName', 'lastName'],
+  setup(props, context) {
+    const age = inject('userAge');
     const uName = computed(() => `${props.firstName} ${props.lastName}`);
+    console.log(context);
     return {
-      userName: uName
+      userName: uName,
+      age
     }
   }
 }
