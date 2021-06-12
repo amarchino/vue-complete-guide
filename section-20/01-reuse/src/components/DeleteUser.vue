@@ -22,7 +22,7 @@ export default {
     };
   },
   mixins: [
-    alertMixin
+    alertMixin,
   ]
 };
 </script>
