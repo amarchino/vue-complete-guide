@@ -30,15 +30,9 @@ export default {
 
     const { enteredSearchTerm, availableItems, updateSearch } = useSearch(projects, 'title');
 
-    const hasProjects = computed(function () {
-      return props.user.projects && availableItems.value.length > 0;
-    });
+    const hasProjects = computed(() => user.value.projects && availableItems.value.length > 0);
 
-
-
-    watch(user, function () {
-      enteredSearchTerm.value = '';
-    });
+    watch(user, () => updateSearch(''));
 
     return {
       enteredSearchTerm,
